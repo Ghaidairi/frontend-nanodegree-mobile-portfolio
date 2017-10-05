@@ -435,8 +435,7 @@ var resizePizzas = function(size) {
       }
     }
 
-    var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
-
+     var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
      for (var i = 0; i<randomPizzas.length; i++) {
        randomPizzas[i].style.width  = newwidth + "%";
      }
@@ -489,8 +488,9 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+// *moved the decleration outside the loop for effeciency purpses
+var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -522,12 +522,18 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  var items = document.querySelectorAll('.mover');
-  for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.documentElement.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-  }
+  // var items = document.querySelectorAll('.mover');
+  // for (var i = 0; i < items.length; i++) {
+  //   var phase = Math.sin((document.documentElement.scrollTop / 1250) + (i % 5));
+  //   items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
 
+  // *move the variable declerations outside the loop to make it effecient
+    var scrollPos = document.documentElement.scrollTop / 1250;
+    var phase;
+    for (var i = 0; i < items.length; i++) {
+      phase = Math.sin(scrollPos + (i % 5));     // declared phase variable in the initialisatoin of the for loop.
+      items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    }
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
   window.performance.mark("mark_end_frame");
