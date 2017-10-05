@@ -9,14 +9,30 @@
 
     <!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
     <!-- <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"> -->
-    <script src="dist/min-css/webfontloader/webfontloader.js"></script>
+    <!-- <script src="dist/min-css/webfontloader/webfontloader.js" async></script>
     <script>
      WebFont.load({
         google: {
           families: ['Open+Sans:400,700', 'Roboto Condensed:400,700']
         }
       });
-    </script>
+    </script> -->
+
+    <script type="text/javascript">
+        WebFontConfig = {
+        google: { families: [ 'Open Sans', 'Roboto Condensed' ]
+           }
+        };
+        (function() {
+         var wf = document.createElement('script');
+         wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+             '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+         wf.type = 'text/javascript';
+         wf.async = 'true';
+         var s = document.getElementsByTagName('script')[0];
+         s.parentNode.insertBefore(wf, s);
+       })();
+   </script>
 
     <style>
         html {
@@ -68,6 +84,15 @@
           body { font-size: 12px;}
           header p { padding-left: 4.5em;}
         }
+        .wf-loading p { font-family: sans-serif; }
+        .wf-inactive p { font-family: sans-serif; }
+        .wf-active p { font-family: 'Alegreya', sans-serif; width:400px; margin-left: 20px; }
+        .wf-loading h1 { font-family: sans-serif; font-weight: 400; font-size: 24px; }
+        .wf-inactive h1 { font-family: sans-serif; font-weight: 400; font-size: 24px; }
+        .wf-active h1 { font-family: 'Aclonica', sans-serif; font-weight: 400; font-size: 24px; }
+        .wf-loading h2 { font-family: sans-serif; font-weight: 300; font-size: 20px; color: #5E5E5E; }
+        .wf-inactive h2 { font-family: sans-serif; font-weight: 300; font-size: 20px; color: #5E5E5E; }
+        .wf-active h2 { font-family: 'Acme', sans-serif; font-weight: 300; font-size: 20px; color: #5E5E5E; }
     </style>
     <link href="dist/min-css/print.css" rel="stylesheet" media="print">
 
