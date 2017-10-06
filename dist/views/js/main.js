@@ -515,9 +515,21 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // declearing the phase outside the loop for effeciency purpeses
 // simplify the loop
 function updatePositions() {
+  frame++;
+  window.performance.mark("mark_start_frame");
+
   var phase = [];
   for (var i = 0; i < 25; i++) {
     phase[i] = Math.sin((document.documentElement.scrollTop / 1250) + (i % 5)) * 100;
+  }
+
+  // User Timing API to the rescue again. Seriously, it's worth learning.
+  // Super easy to create custom metrics.
+  window.performance.mark("mark_end_frame");
+  window.performance.measure("measure_frame_duration", "mark_start_frame", "mark_end_frame");
+  if (frame % 10 === 0) {
+    var timesToUpdatePosition = window.performance.getEntriesByName("measure_frame_duration");
+    logAverageFrame(timesToUpdatePosition);
   }
 }
 
@@ -530,7 +542,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var s = 256;
   // move decleration outside the loop for effeciency purpeses
   var elem;
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < 25; i++) {
     elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
